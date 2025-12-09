@@ -1,4 +1,4 @@
-import { AttributeValue } from "../entities/attribute-value.entity";
+import { AttributeValue } from '../entities/attribute-value.entity';
 
 export class PaginatedAttributeValueResponseDto {
   attribueValues: AttributeValue[];

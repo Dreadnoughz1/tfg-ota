@@ -1,4 +1,4 @@
-export class SearchAttributeValueDto {
+export class SearchDto {
   orderBy: string;
   order: 'ASC' | 'DESC' = 'DESC';
   page: number = 1;

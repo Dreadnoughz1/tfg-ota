@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ConnectorsService } from './connectors.service';
 import { CreateConnectorDto } from './dto/create-connector.dto';
 import { UpdateConnectorDto } from './dto/update-connector.dto';
@@ -23,7 +31,10 @@ export class ConnectorsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateConnectorDto: UpdateConnectorDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateConnectorDto: UpdateConnectorDto,
+  ) {
     return this.connectorsService.update(+id, updateConnectorDto);
   }
 

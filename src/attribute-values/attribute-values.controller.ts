@@ -11,7 +11,7 @@ import {
 import { AttributeValuesService } from './attribute-values.service';
 import { CreateAttributeValueDto } from './dto/create-attribute-value.dto';
 import { UpdateAttributeValueDto } from './dto/update-attribute-value.dto';
-import { SearchAttributeValueDto } from './dto/search-attribute-value.dto';
+import { SearchDto } from '../shared/dto/search-attribute-value.dto';
 
 @Controller('attribute-values')
 export class AttributeValuesController {
@@ -25,7 +25,7 @@ export class AttributeValuesController {
   }
 
   @Get()
-  findAll(@Query() paginationDto: SearchAttributeValueDto) {
+  findAll(@Query() paginationDto: SearchDto) {
     return this.attributeValuesService.findAll(paginationDto);
   }
 

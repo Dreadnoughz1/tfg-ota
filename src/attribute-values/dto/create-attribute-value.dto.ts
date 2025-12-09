@@ -1,4 +1,4 @@
-import { Machine } from "src/backend/entities";
+import { Machine } from 'src/machines/entities/machine.entity';
 
 export class CreateAttributeValueDto {
   id: number;

@@ -2,10 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AttributeValue } from './entities/attribute-value.entity';
 import { Repository } from 'typeorm';
-import { CreateAttributeValueDto } from './dto/create-attribute-value.dto';
-import { PaginatedAttributeValueResponseDto } from './dto/paginated-attribute-value-response.dto';
-import { SearchAttributeValueDto } from './dto/search-attribute-value.dto';
-import { UpdateAttributeValueDto } from './dto/update-attribute-value.dto';
+import {
+  CreateAttributeValueDto,
+  PaginatedAttributeValueResponseDto,
+  UpdateAttributeValueDto,
+} from './dto';
+import { SearchDto } from 'src/shared/dto';
 
 @Injectable()
 export class AttributeValuesService {
@@ -14,16 +16,17 @@ export class AttributeValuesService {
     private readonly attributeValueRepository: Repository<AttributeValue>,
   ) {}
 
-  create(createAttributeValueDto: CreateAttributeValueDto) {
+  async create(createAttributeValueDto: CreateAttributeValueDto) {
     const attributeValue = this.attributeValueRepository.create(
       createAttributeValueDto,
     );
+    await this.attributeValueRepository.save(attributeValue);
 
     return attributeValue;
   }
 
   async findAll(
-    paginationDto: SearchAttributeValueDto,
+    paginationDto: SearchDto,
   ): Promise<PaginatedAttributeValueResponseDto> {
     const { orderBy, order, page, limit, searchText } = paginationDto;
 
