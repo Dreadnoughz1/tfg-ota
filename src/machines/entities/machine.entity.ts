@@ -4,9 +4,9 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-} from "typeorm";
-import { Connector } from "../../connectors/entities/connector.entity";
-import { AttributeValue } from "../../attribute-values/entities/attribute-value.entity";
+} from 'typeorm';
+import { Connector } from '../../connectors/entities/connector.entity';
+import { AttributeValue } from '../../attribute-values/entities/attribute-value.entity';
 
 @Entity()
 export class Machine {

@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Connector } from "./index";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Connector } from '../../connectors/entities/connector.entity';
 
 @Entity()
 export class Gateway {

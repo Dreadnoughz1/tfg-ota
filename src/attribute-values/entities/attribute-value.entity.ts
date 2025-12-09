@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Machine } from "../../machines/entities/machine.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Machine } from '../../machines/entities/machine.entity';
 
 @Entity()
 export class AttributeValue {
@@ -9,7 +9,7 @@ export class AttributeValue {
   @Column()
   attributeName: string;
 
-  @Column("float")
+  @Column('float')
   value: number;
 
   @Column()

@@ -4,9 +4,9 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-} from "typeorm";
-import { Gateway } from "../../gateways/entities/gateway.entity";
-import { Machine } from "../../machines/entities/machine.entity";
+} from 'typeorm';
+import { Gateway } from '../../gateways/entities/gateway.entity';
+import { Machine } from '../../machines/entities/machine.entity';
 
 @Entity()
 export class Connector {
