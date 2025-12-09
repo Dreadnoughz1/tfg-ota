@@ -5,7 +5,7 @@ import { UpdateMachineDto } from './dto/update-machine.dto';
 @Injectable()
 export class MachinesService {
   create(createMachineDto: CreateMachineDto) {
-    return 'This action adds a new machine';
+    return createMachineDto;
   }
 
   findAll() {
@@ -17,6 +17,7 @@ export class MachinesService {
   }
 
   update(id: number, updateMachineDto: UpdateMachineDto) {
+    console.log(updateMachineDto);
     return `This action updates a #${id} machine`;
   }
 

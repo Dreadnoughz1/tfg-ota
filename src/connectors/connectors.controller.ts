@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ConnectorsService } from './connectors.service';
 import { CreateConnectorDto } from './dto/create-connector.dto';
 import { UpdateConnectorDto } from './dto/update-connector.dto';
+import { SearchDto } from 'src/shared/dto';
 
 @Controller('connectors')
 export class ConnectorsController {
@@ -21,8 +23,8 @@ export class ConnectorsController {
   }
 
   @Get()
-  findAll() {
-    return this.connectorsService.findAll();
+  findAll(@Query() paginationDto: SearchDto) {
+    return this.connectorsService.findAll(paginationDto);
   }
 
   @Get(':id')
