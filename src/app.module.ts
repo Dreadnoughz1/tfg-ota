@@ -6,23 +6,25 @@ import { GatewaysModule } from './gateways/gateways.module';
 import { ConnectorsModule } from './connectors/connectors.module';
 import { MachinesModule } from './machines/machines.module';
 import { AttributeValuesModule } from './attribute-values/attribute-values.module';
+import { IngestModule } from './ingest/ingest.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
+      host: 'localhost',
       port: 5432,
-      username: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASS || 'postgres',
-      database: process.env.DB_NAME || 'mi_basedatos',
+      username: 'admin',
+      password: 'admin123',
+      database: 'industrial_data',
       autoLoadEntities: true,
-      synchronize: true, // ⚠ Solo en desarrollo
+      synchronize: true,
     }),
     GatewaysModule,
     ConnectorsModule,
     MachinesModule,
     AttributeValuesModule,
+    IngestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -42,6 +42,10 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# restart database (clear)
+$ docker compose down -v
+$ docker compose up -d
 ```
 
 ## Run tests
