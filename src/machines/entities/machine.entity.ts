@@ -14,6 +14,9 @@ export class Machine {
   id: number;
 
   @Column()
+  description: string;
+
+  @Column()
   serial: string;
 
   @Column()
