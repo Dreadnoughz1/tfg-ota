@@ -8,6 +8,7 @@ import { MachinesModule } from './machines/machines.module';
 import { AttributeValuesModule } from './attribute-values/attribute-values.module';
 import { IngestModule } from './ingest/ingest.module';
 import { AlertModule } from './alert/alert.module';
+import { AlertsGateway } from './alerts/alerts.gateway';
 
 @Module({
   imports: [
@@ -29,6 +30,6 @@ import { AlertModule } from './alert/alert.module';
     AlertModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AlertsGateway],
 })
 export class AppModule {}

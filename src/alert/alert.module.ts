@@ -4,10 +4,11 @@ import { AlertsController } from './alert.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Alert } from './entities/alert.entity';
 import { AlertRule } from './entities/alert-rule.entity';
+import { AlertsGateway } from 'src/alerts/alerts.gateway';
 
 @Module({
   controllers: [AlertsController],
-  providers: [AlertsService],
+  providers: [AlertsService, AlertsGateway],
   imports: [AlertModule, TypeOrmModule.forFeature([AlertRule, Alert])],
   exports: [AlertsService],
 })

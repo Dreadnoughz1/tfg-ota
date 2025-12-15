@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { AlertRule } from './entities/alert-rule.entity';
 import { Alert } from './entities/alert.entity';
 import { Machine } from '../machines/entities/machine.entity';
+import { AlertsGateway } from 'src/alerts/alerts.gateway';
 
 @Injectable()
 export class AlertsService {
@@ -12,6 +13,7 @@ export class AlertsService {
     private readonly ruleRepo: Repository<AlertRule>,
     @InjectRepository(Alert)
     private readonly alertRepo: Repository<Alert>,
+    private readonly alertsGateway: AlertsGateway,
   ) {}
 
   async findByMachine(machineId: number, severity?: 'warning' | 'critical') {
@@ -58,6 +60,7 @@ export class AlertsService {
         });
 
         await this.alertRepo.save(alert);
+        this.alertsGateway.emitAlert(alert);
       }
     }
   }
