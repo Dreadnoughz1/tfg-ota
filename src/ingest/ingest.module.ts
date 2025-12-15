@@ -6,10 +6,12 @@ import { Machine } from '../machines/entities/machine.entity';
 import { AttributeValue } from '../attribute-values/entities/attribute-value.entity';
 import { Connector } from 'src/connectors/entities/connector.entity';
 import { Gateway } from 'src/gateways/entities/gateway.entity';
+import { AlertModule } from 'src/alert/alert.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Machine, AttributeValue, Connector, Gateway]),
+    AlertModule,
   ],
   controllers: [IngestController],
   providers: [IngestService],

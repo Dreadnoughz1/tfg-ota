@@ -7,6 +7,7 @@ import { ConnectorsModule } from './connectors/connectors.module';
 import { MachinesModule } from './machines/machines.module';
 import { AttributeValuesModule } from './attribute-values/attribute-values.module';
 import { IngestModule } from './ingest/ingest.module';
+import { AlertModule } from './alert/alert.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { IngestModule } from './ingest/ingest.module';
     MachinesModule,
     AttributeValuesModule,
     IngestModule,
+    AlertModule,
   ],
   controllers: [AppController],
   providers: [AppService],

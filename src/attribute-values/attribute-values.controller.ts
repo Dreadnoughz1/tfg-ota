@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AttributeValuesService } from './attribute-values.service';
 import { CreateAttributeValueDto } from './dto/create-attribute-value.dto';
@@ -32,6 +33,11 @@ export class AttributeValuesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.attributeValuesService.findOne(+id);
+  }
+
+  @Get('/machine/:machineId/latest')
+  getLatestValues(@Param('machineId', ParseIntPipe) machineId: number) {
+    return this.attributeValuesService.findLatestByMachine(machineId);
   }
 
   @Patch(':id')

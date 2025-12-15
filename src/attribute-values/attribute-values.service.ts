@@ -4,6 +4,7 @@ import { AttributeValue } from './entities/attribute-value.entity';
 import { Repository } from 'typeorm';
 import {
   CreateAttributeValueDto,
+  LatestAttributeValueDto,
   PaginatedAttributeValueResponseDto,
   UpdateAttributeValueDto,
 } from './dto';
@@ -67,6 +68,24 @@ export class AttributeValuesService {
     }
 
     return attributeValue;
+  }
+
+  async findLatestByMachine(
+    machineId: number,
+  ): Promise<LatestAttributeValueDto[]> {
+    const raw = await this.attributeValueRepository
+      .createQueryBuilder('av')
+      .select(['av.attributeName', 'av.value', 'av.timestamp'])
+      .where('av.machineId = :machineId', { machineId })
+      .distinctOn(['av.attributeName'])
+      .orderBy('av.attributeName')
+      .addOrderBy('av.timestamp', 'DESC')
+      .getRawMany();
+    return raw.map((r) => ({
+      attributeName: r.av_attributeName,
+      value: r.av_value,
+      timestamp: r.av_timestamp,
+    }));
   }
 
   async update(id: number, updateAttributeValueDto: UpdateAttributeValueDto) {

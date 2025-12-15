@@ -6,6 +6,7 @@ import { AttributeValue } from '../attribute-values/entities/attribute-value.ent
 import { IngestHierarchyDto } from './dto';
 import { Gateway } from 'src/gateways/entities/gateway.entity';
 import { Connector } from 'src/connectors/entities/connector.entity';
+import { AlertsService } from 'src/alert/alert.service';
 
 @Injectable()
 export class IngestService {
@@ -18,6 +19,8 @@ export class IngestService {
     private readonly gatewayRepository: Repository<Gateway>,
     @InjectRepository(Connector)
     private readonly connectorRepository: Repository<Connector>,
+
+    private readonly alertsService: AlertsService,
   ) {}
 
   async ingest(dto: IngestHierarchyDto) {
@@ -67,6 +70,14 @@ export class IngestService {
     );
 
     await this.attributeValueRepository.save(attributeValues);
+    for (const attr of dto.attributes) {
+      await this.alertsService.evaluate(
+        machine,
+        attr.attributeName,
+        attr.value,
+        new Date(attr.timestamp),
+      );
+    }
 
     return {
       status: 'ok',
