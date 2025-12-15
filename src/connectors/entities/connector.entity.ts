@@ -14,9 +14,11 @@ export class Connector {
   id: number;
 
   @Column()
-  portName: string;
+  name: string;
 
-  @ManyToOne(() => Gateway, (gateway) => gateway.connectors)
+  @ManyToOne(() => Gateway, (gateway) => gateway.connectors, {
+    onDelete: 'CASCADE',
+  })
   gateway: Gateway;
 
   @OneToMany(() => Machine, (machine) => machine.connector)

@@ -14,6 +14,9 @@ export class Machine {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   description: string;
 
   @Column()
@@ -22,7 +25,9 @@ export class Machine {
   @Column()
   model: string;
 
-  @ManyToOne(() => Connector, (connector) => connector.machines)
+  @ManyToOne(() => Connector, (connector) => connector.machines, {
+    onDelete: 'CASCADE',
+  })
   connector: Connector;
 
   @OneToMany(() => AttributeValue, (av) => av.machine)

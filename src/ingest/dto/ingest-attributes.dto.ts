@@ -22,9 +22,14 @@ class IngestAttributeItemDto {
   timestamp: string;
 }
 
-export class IngestAttributesDto {
+export class IngestHierarchyDto {
   @IsNumber()
-  @IsNotEmpty()
+  gatewayId: number;
+
+  @IsNumber()
+  connectorId: number;
+
+  @IsNumber()
   machineId: number;
 
   @IsArray()

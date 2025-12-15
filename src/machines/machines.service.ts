@@ -17,10 +17,10 @@ export class MachinesService {
   ) {}
   async create(createMachineDto: CreateMachineDto) {
     const machine = this.machineRepository.create(createMachineDto);
+    const response = { ...machine, attributeValues: [] };
+    await this.machineRepository.save(response);
 
-    await this.machineRepository.save(machine);
-
-    return machine;
+    return response;
   }
 
   async findAll(

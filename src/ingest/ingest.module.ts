@@ -4,9 +4,13 @@ import { IngestController } from './ingest.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Machine } from '../machines/entities/machine.entity';
 import { AttributeValue } from '../attribute-values/entities/attribute-value.entity';
+import { Connector } from 'src/connectors/entities/connector.entity';
+import { Gateway } from 'src/gateways/entities/gateway.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Machine, AttributeValue])],
+  imports: [
+    TypeOrmModule.forFeature([Machine, AttributeValue, Connector, Gateway]),
+  ],
   controllers: [IngestController],
   providers: [IngestService],
 })
