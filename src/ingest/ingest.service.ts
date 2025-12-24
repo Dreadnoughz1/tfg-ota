@@ -65,7 +65,11 @@ export class IngestService {
         attributeName: attr.attributeName,
         value: attr.value,
         timestamp: attr.timestamp,
-        machine,
+        machineId: machine.id,
+        gatewayId: gateway.id,
+        connectorId: connector.id,
+        lifeBit: true,
+        connexionStatus: 'alive',
       }),
     );
 

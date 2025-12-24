@@ -1,12 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Connector } from '../../connectors/entities/connector.entity';
-import { AttributeValue } from '../../attribute-values/entities/attribute-value.entity';
+import { Gateway } from 'src/gateways/entities/gateway.entity';
 
 @Entity()
 export class Machine {
@@ -30,6 +24,6 @@ export class Machine {
   })
   connector: Connector;
 
-  @OneToMany(() => AttributeValue, (av) => av.machine)
-  attributeValues: AttributeValue[];
+  @ManyToOne(() => Gateway, (gateway) => gateway.machines)
+  gateway: Gateway;
 }

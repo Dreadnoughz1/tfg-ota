@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  Index,
-} from 'typeorm';
-import { Machine } from '../../machines/entities/machine.entity';
+import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 
 @Entity()
 @Index(['machine', 'attributeName', 'timestamp'])
@@ -22,8 +15,18 @@ export class AttributeValue {
   @Column()
   timestamp: Date;
 
-  @ManyToOne(() => Machine, (machine) => machine.attributeValues, {
-    onDelete: 'CASCADE',
-  })
-  machine: Machine;
+  @Column()
+  machineId: number;
+
+  @Column()
+  gatewayId: number;
+
+  @Column()
+  connectorId: number;
+
+  @Column()
+  lifeBit: boolean;
+
+  @Column()
+  connexionStatus: string;
 }
