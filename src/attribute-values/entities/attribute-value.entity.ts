@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index } from 'typeorm';
 
 @Entity()
-@Index(['machine', 'attributeName', 'timestamp'])
+@Index(['machineId', 'attributeName', 'timestamp'])
 export class AttributeValue {
   @PrimaryGeneratedColumn()
   id: number;
