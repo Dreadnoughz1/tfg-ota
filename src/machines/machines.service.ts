@@ -16,7 +16,9 @@ export class MachinesService {
   constructor(
     @InjectRepository(Machine)
     private readonly machineRepository: Repository<Machine>,
+    @InjectRepository(Connector)
     private readonly connectorRepository: Repository<Connector>,
+    @InjectRepository(Gateway)
     private readonly gatewayRepository: Repository<Gateway>,
   ) {}
   async create(createMachineDto: CreateMachineDto) {
