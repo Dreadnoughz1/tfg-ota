@@ -8,16 +8,41 @@ import {
   PaginatedMachineResponseDto,
   UpdateMachineDto,
 } from './dto';
+import { Connector } from 'src/connectors/entities/connector.entity';
+import { Gateway } from 'src/gateways/entities/gateway.entity';
 
 @Injectable()
 export class MachinesService {
   constructor(
     @InjectRepository(Machine)
     private readonly machineRepository: Repository<Machine>,
+    private readonly connectorRepository: Repository<Connector>,
+    private readonly gatewayRepository: Repository<Gateway>,
   ) {}
   async create(createMachineDto: CreateMachineDto) {
     const machine = this.machineRepository.create(createMachineDto);
-    const response = { ...machine, attributeValues: [] };
+
+    const connector = await this.connectorRepository.findOne({
+      where: {
+        id: createMachineDto.connectorId,
+      },
+    });
+
+    if (!connector) {
+      throw new NotFoundException('Conector no encontrado.');
+    }
+
+    const gateway = await this.gatewayRepository.findOne({
+      where: {
+        id: createMachineDto.gatewayId,
+      },
+    });
+
+    if (!gateway) {
+      throw new NotFoundException('Gateway no encontrado.');
+    }
+
+    const response = { ...machine, connector: connector, gateway: gateway };
     await this.machineRepository.save(response);
 
     return response;
@@ -74,7 +99,34 @@ export class MachinesService {
     if (!machine) {
       throw new NotFoundException(`Machine con ID ${id} no encontrado.`);
     }
-    Object.assign(machine, updateMachineDto);
+
+    const { connectorId, gatewayId, ...rest } = updateMachineDto;
+
+    if (machine.connector.id !== connectorId) {
+      const connector = await this.connectorRepository.findOne({
+        where: { id: connectorId },
+      });
+
+      if (!connector) {
+        throw new NotFoundException('Conector no encontrado');
+      }
+
+      machine.connector = connector;
+    }
+
+    if (machine.gateway.id !== gatewayId) {
+      const gateway = await this.gatewayRepository.findOne({
+        where: { id: gatewayId },
+      });
+
+      if (!gateway) {
+        throw new NotFoundException('Gateway no encontrado');
+      }
+
+      machine.gateway = gateway;
+    }
+
+    Object.assign(machine, rest);
 
     await this.machineRepository.save(machine);
 
