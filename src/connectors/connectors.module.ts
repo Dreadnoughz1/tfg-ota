@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ConnectorsService } from './connectors.service';
 import { ConnectorsController } from './connectors.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,8 +12,8 @@ import { MachinesModule } from 'src/machines/machines.module';
   imports: [
     TypeOrmModule.forFeature([Connector]),
     GatewaysModule,
-    MachinesModule,
+    forwardRef(() => MachinesModule),
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, ConnectorsService],
 })
 export class ConnectorsModule {}

@@ -14,6 +14,6 @@ import { GatewaysModule } from 'src/gateways/gateways.module';
     forwardRef(() => ConnectorsModule),
     GatewaysModule,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, MachinesService],
 })
 export class MachinesModule {}
