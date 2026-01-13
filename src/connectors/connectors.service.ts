@@ -8,19 +8,50 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connector } from './entities/connector.entity';
 import { Repository } from 'typeorm';
 import { SearchDto } from 'src/shared/dto';
+import { Gateway } from 'src/gateways/entities/gateway.entity';
+import { Machine } from 'src/machines/entities/machine.entity';
 
 @Injectable()
 export class ConnectorsService {
   constructor(
     @InjectRepository(Connector)
     private readonly connectorRepository: Repository<Connector>,
+
+    @InjectRepository(Gateway)
+    private readonly gatewayRepository: Repository<Gateway>,
+
+    @InjectRepository(Machine)
+    private readonly machineRepository: Repository<Machine>,
   ) {}
   async create(createConnectorDto: CreateConnectorDto) {
     const connector = this.connectorRepository.create(createConnectorDto);
 
-    await this.connectorRepository.save(connector);
+    const gateway = await this.gatewayRepository.findOne({
+      where: { id: createConnectorDto.gatewayId },
+    });
 
-    return connector;
+    if (!gateway) {
+      throw new NotFoundException(
+        `Gateway con ID ${createConnectorDto.gatewayId} no encontrado.`,
+      );
+    }
+
+    const machines: Machine[] = [];
+    for (const machineId of createConnectorDto.machinesId) {
+      const machine = await this.machineRepository.findOne({
+        where: { id: machineId },
+      });
+      if (!machine) {
+        throw new NotFoundException(
+          `Máquina con ID ${machineId} no encontrada.`,
+        );
+      }
+      machines.push(machine);
+    }
+    const response = { ...connector, gateway: gateway, machines: machines };
+    await this.connectorRepository.save(response);
+
+    return response;
   }
 
   async findAll(
@@ -73,7 +104,43 @@ export class ConnectorsService {
     if (!connector) {
       throw new NotFoundException(`Conector con ID ${id} no encontrado.`);
     }
-    Object.assign(connector, updateConnectorDto);
+    const { machinesId, gatewayId, ...rest } = updateConnectorDto;
+
+    if (
+      connector.gateway.id !== undefined &&
+      connector.gateway.id !== gatewayId
+    ) {
+      const gateway = await this.gatewayRepository.findOne({
+        where: { id: gatewayId },
+      });
+
+      if (!gateway) {
+        throw new NotFoundException('Conector no encontrado');
+      }
+
+      connector.gateway = gateway;
+    }
+
+    if (machinesId !== undefined) {
+      for (const machineId of machinesId) {
+        if (
+          machineId !== null &&
+          !connector.machines.find((m) => m.id === machineId)
+        ) {
+          const machine = await this.machineRepository.findOne({
+            where: { id: machineId },
+          });
+
+          if (!machine) {
+            throw new NotFoundException('Máquina no encontrada');
+          }
+
+          connector.machines.push(machine);
+        }
+      }
+    }
+
+    Object.assign(connector, rest);
 
     await this.connectorRepository.save(connector);
 
