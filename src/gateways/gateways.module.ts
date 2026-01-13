@@ -5,8 +5,9 @@ import { Gateway } from './entities/gateway.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Gateway])],
   controllers: [GatewaysController],
   providers: [GatewaysService],
+  imports: [TypeOrmModule.forFeature([Gateway])],
+  exports: [TypeOrmModule],
 })
 export class GatewaysModule {}
