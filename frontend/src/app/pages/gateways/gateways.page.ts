@@ -1,7 +1,7 @@
-import { GatewayService } from 'src/app/core/services/gateway.service';
+import { GatewayService } from '../../core/services/gateway.service';
 
 export class GatewaysPage {
-  gateways: any[] = [];
+  gateways: Gateway[] = [];
 
   constructor(private gatewayService: GatewayService) {}
 
