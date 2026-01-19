@@ -22,10 +22,6 @@ export class AlertsService {
       severity: severity ? severity : undefined,
     };
 
-    if (severity) {
-      where.severity = severity;
-    }
-
     return this.alertRepo.find({
       where,
       order: { timestamp: 'DESC' },
@@ -40,6 +36,9 @@ export class AlertsService {
   }
 
   async evaluate(
+    // este método evalúa los valores de los atributos que se reciben y comprueba si se sobrepasa algún umbral. Si es así, crea una alerta y la emite a través de la gateway
+    //todo: En vez de emitirla así debo hacer que el front-end reciba notificaciones con los valores, umbral superado y máquina.
+    // El usuario debe poder suscribirse a las máquinas que quiera
     machine: Machine,
     attributeName: string,
     value: number,
