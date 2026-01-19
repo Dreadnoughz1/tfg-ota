@@ -17,7 +17,10 @@ export class AlertsService {
   ) {}
 
   async findByMachine(machineId: number, severity?: 'warning' | 'critical') {
-    const where: any = { machine: { id: machineId } };
+    const where = {
+      machine: { id: machineId },
+      severity: severity ? severity : undefined,
+    };
 
     if (severity) {
       where.severity = severity;
