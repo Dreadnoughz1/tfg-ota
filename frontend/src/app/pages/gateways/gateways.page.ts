@@ -1,0 +1,19 @@
+import { GatewayService } from 'src/app/core/services/gateway.service';
+
+export class GatewaysPage {
+  gateways: any[] = [];
+
+  constructor(private gatewayService: GatewayService) {}
+
+  ionViewWillEnter() {
+    this.gatewayService.getAll().subscribe((data) => {
+      this.gateways = data;
+    });
+  }
+
+  delete(id: number) {
+    this.gatewayService.delete(id).subscribe(() => {
+      this.gateways = this.gateways.filter((g) => g.id !== id);
+    });
+  }
+}
