@@ -1,3 +1,4 @@
+import { Gateway } from '../../models/gateway.model';
 import { GatewayService } from '../../core/services/gateway.service';
 
 export class GatewaysPage {

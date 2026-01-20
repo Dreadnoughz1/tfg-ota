@@ -9,12 +9,7 @@ import { GatewaysPageRoutingModule } from './gateways-routing.module';
 import { GatewaysPage } from './gateways.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    GatewaysPageRoutingModule
-  ],
-  declarations: [GatewaysPage]
+  imports: [CommonModule, FormsModule, IonicModule, GatewaysPageRoutingModule],
+  declarations: [GatewaysPage],
 })
 export class GatewaysPageModule {}
