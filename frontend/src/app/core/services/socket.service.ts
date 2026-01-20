@@ -4,7 +4,7 @@ import { io, Socket } from 'socket.io-client';
 
 @Injectable({ providedIn: 'root' })
 export class SocketService {
-  private socket: Socket;
+  constructor(private socket: Socket) {}
 
   connect() {
     this.socket = io(environment.wsUrl, {
