@@ -7,7 +7,7 @@ export class GatewaysPage {
   constructor(private gatewayService: GatewayService) {}
 
   ionViewWillEnter() {
-    this.gatewayService.getAll().subscribe((data) => {
+    this.gatewayService.getAll().subscribe((data: Gateway[]) => {
       this.gateways = data;
     });
   }

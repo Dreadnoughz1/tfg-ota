@@ -20,13 +20,13 @@ export class AuthService {
       })
       .subscribe((res) => {
         localStorage.setItem('token', res.access_token);
-        this.router.navigate(['/gateways']);
+        void this.router.navigate(['/gateways']);
       });
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    void this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
