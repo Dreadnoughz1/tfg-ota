@@ -26,6 +26,10 @@ const routes: Routes = [
         (m) => m.GatewaysPageModule,
       ),
   },
+  {
+    path: 'machines',
+    loadChildren: () => import('./pages/machines/machines.module').then( m => m.MachinesPageModule)
+  },
 ];
 
 @NgModule({
