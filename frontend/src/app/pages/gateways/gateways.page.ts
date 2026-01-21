@@ -1,5 +1,5 @@
-import { Gateway } from '../../models/gateway.model';
-import { GatewayService } from '../../core/services/gateway.service';
+import { Gateway } from '../../models';
+import { GatewayService } from '../../core/services';
 
 export class GatewaysPage {
   gateways: Gateway[] = [];
