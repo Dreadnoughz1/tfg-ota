@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { LoginResponse } from 'src/app/models/auth.model';
+import { LoginResponse } from '../../models/';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
