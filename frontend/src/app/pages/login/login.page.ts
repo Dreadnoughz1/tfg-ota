@@ -4,6 +4,7 @@ import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
+  standalone: false,
 })
 export class LoginPage {
   username = '';

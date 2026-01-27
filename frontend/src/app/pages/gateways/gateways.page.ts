@@ -1,6 +1,12 @@
 import { Gateway } from '../../models';
 import { GatewayService } from '../../core/services';
+import { Component } from '@angular/core';
 
+@Component({
+  selector: 'app-gateways',
+  templateUrl: './gateways.page.html',
+  standalone: false,
+})
 export class GatewaysPage {
   gateways: Gateway[] = [];
 
