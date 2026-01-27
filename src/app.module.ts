@@ -9,6 +9,7 @@ import { AttributeValuesModule } from './attribute-values/attribute-values.modul
 import { IngestModule } from './ingest/ingest.module';
 import { AlertModule } from './alert/alert.module';
 import { AlertsGateway } from './alerts/alerts.gateway';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AlertsGateway } from './alerts/alerts.gateway';
     AttributeValuesModule,
     IngestModule,
     AlertModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, AlertsGateway],
