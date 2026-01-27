@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { LoginResponse } from 'src/app/models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     this.http
-      .post<any>(`${this.api}/auth/login`, {
+      .post<LoginResponse>(`${this.api}/auth/login`, {
         username,
         password,
       })
