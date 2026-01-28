@@ -13,7 +13,9 @@ export class GatewaysPage {
   constructor(private gatewayService: GatewayService) {}
 
   ionViewWillEnter() {
-    this.gatewayService.getAll().subscribe((data: Gateway[]) => {
+    console.log('Loading gateways...');
+    this.gatewayService.getAll().subscribe((data: any[]) => {
+      console.log('Gateways loaded');
       this.gateways = data;
     });
   }

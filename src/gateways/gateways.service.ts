@@ -26,6 +26,7 @@ export class GatewaysService {
   async findAll(
     paginationDto: SearchDto,
   ): Promise<PaginatedGatewayResponseDto> {
+    console.log('Findign gateways');
     const { orderBy, order, page, limit, searchText } = paginationDto;
 
     const queryBuilder = this.gatewayRepository.createQueryBuilder('gateway');
@@ -46,6 +47,7 @@ export class GatewaysService {
 
     const [data, total] = await queryBuilder.getManyAndCount();
 
+    console.log('returning gateways');
     return {
       gateways: data,
       total: total,
