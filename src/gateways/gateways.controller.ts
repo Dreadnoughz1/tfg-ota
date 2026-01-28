@@ -23,6 +23,7 @@ export class GatewaysController {
 
   @Get()
   findAll(@Query() paginationDto: SearchDto) {
+    console.log('Llega a controlador?');
     return this.gatewaysService.findAll(paginationDto);
   }
 
