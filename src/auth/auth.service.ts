@@ -14,7 +14,7 @@ export class AuthService {
     const user = await this.usersService.findByUsername(username);
 
     if (!user || user === null) {
-      throw new UnauthorizedException('Credenciales incorrectas');
+      throw new UnauthorizedException('El usuario no existe');
     }
 
     const isValid: boolean = await bcrypt.compare(password, user.password);
