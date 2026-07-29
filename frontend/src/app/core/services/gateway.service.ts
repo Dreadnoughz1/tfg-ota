@@ -15,6 +15,7 @@ export class GatewayService {
       searchText: '',
     };
     const params = new HttpParams({ fromObject: dto });
+    console.log('Params:', params.toString());
     return this.http.get<any>('http://localhost:3000/gateways', {
       params: params,
     });
