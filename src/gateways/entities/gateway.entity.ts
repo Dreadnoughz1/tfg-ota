@@ -8,7 +8,10 @@ export class Gateway {
   id: number;
 
   @Column()
-  description: string;
+  name: string;
+
+  @Column()
+  location: string;
 
   @OneToMany(() => Connector, (connector) => connector.gateway)
   connectors: Connector[];

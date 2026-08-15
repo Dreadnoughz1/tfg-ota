@@ -16,6 +16,9 @@ export class Connector {
   @Column()
   name: string;
 
+  @Column()
+  portName: string;
+
   @ManyToOne(() => Gateway, (gateway) => gateway.connectors, {
     onDelete: 'CASCADE',
   })
