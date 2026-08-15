@@ -8,19 +8,38 @@ import {
   PaginatedGatewayResponseDto,
   UpdateGatewayDto,
 } from './dto';
+import { Connector } from 'src/connectors/entities/connector.entity';
 
 @Injectable()
 export class GatewaysService {
   constructor(
     @InjectRepository(Gateway)
     private readonly gatewayRepository: Repository<Gateway>,
+
+    @InjectRepository(Connector)
+    private readonly connectorRepository: Repository<Connector>,
   ) {}
   async create(createGatewayDto: CreateGatewayDto) {
     const gateway = this.gatewayRepository.create(createGatewayDto);
 
-    await this.gatewayRepository.save(gateway);
+    const connectors: Connector[] = [];
+    for (const connectorId of createGatewayDto.connectorsId) {
+      const connector = await this.connectorRepository.findOne({
+        where: { id: connectorId },
+      });
+      if (!connector) {
+        throw new NotFoundException(
+          `Conector con ID ${connectorId} no encontrado.`,
+        );
+      }
+      connectors.push(connector);
+    }
 
-    return gateway;
+    const response = { ...gateway, connectors: connectors };
+
+    await this.gatewayRepository.save(response);
+
+    return response;
   }
 
   async findAll(
