@@ -20,7 +20,7 @@ export class AlertsController {
    * Ejemplo:
    * GET /alerts/machine/1?severity=critical
    */
-  @Get('machine/:machineId/filter')
+  @Get('machine/filter/:machineId')
   getAlertsByMachineFiltered(
     @Param('machineId', ParseIntPipe) machineId: number,
     @Query('severity') severity?: 'warning' | 'critical',
