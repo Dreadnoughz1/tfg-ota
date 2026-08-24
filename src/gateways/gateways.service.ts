@@ -9,6 +9,7 @@ import {
   UpdateGatewayDto,
 } from './dto';
 import { Connector } from 'src/connectors/entities/connector.entity';
+import { Machine } from 'src/machines/entities/machine.entity';
 
 @Injectable()
 export class GatewaysService {
@@ -18,6 +19,9 @@ export class GatewaysService {
 
     @InjectRepository(Connector)
     private readonly connectorRepository: Repository<Connector>,
+
+    @InjectRepository(Machine)
+    private readonly machineRepository: Repository<Machine>,
   ) {}
   async create(createGatewayDto: CreateGatewayDto) {
     const gateway = this.gatewayRepository.create(createGatewayDto);
@@ -35,7 +39,21 @@ export class GatewaysService {
       connectors.push(connector);
     }
 
-    const response = { ...gateway, connectors: connectors };
+    const machines: Machine[] = [];
+
+    for (const machineId of createGatewayDto.machinesId) {
+      const machine = await this.machineRepository.findOne({
+        where: { id: machineId },
+      });
+      if (!machine) {
+        throw new NotFoundException(
+          `Máquina con ID ${machineId} no encontrada.`,
+        );
+      }
+      machines.push(machine);
+    }
+
+    const response = { ...gateway, connectors: connectors, machines: machines };
 
     await this.gatewayRepository.save(response);
 

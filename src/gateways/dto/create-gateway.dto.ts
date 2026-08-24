@@ -4,4 +4,5 @@ export class CreateGatewayDto {
   name: string;
   location: string;
   connectorsId: number[];
+  machinesId: number[];
 }
