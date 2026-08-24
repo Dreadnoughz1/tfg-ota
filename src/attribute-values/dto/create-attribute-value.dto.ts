@@ -26,5 +26,11 @@ export class CreateAttributeValueDto {
   connexionStatus: string;
 
   @IsInt()
+  gatewayId: number;
+
+  @IsInt()
+  connectorId: number;
+
+  @IsInt()
   machineId: number;
 }
