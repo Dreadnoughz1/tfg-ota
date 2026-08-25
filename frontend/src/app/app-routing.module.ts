@@ -18,13 +18,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'gateways', pathMatch: 'full' },
   {
-    path: 'gateways',
-    loadChildren: () =>
-      import('./pages/gateways/gateways.module').then(
-        (m) => m.GatewaysPageModule,
-      ),
+    path: 'connectors',
+    loadChildren: () => import('./pages/connectors/connectors.module').then((m) => m.ConnectorsPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'machines',
@@ -32,6 +30,17 @@ const routes: Routes = [
       import('./pages/machines/machines.module').then(
         (m) => m.MachinesPageModule,
       ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'alerts',
+    loadChildren: () => import('./pages/alerts/alerts.module').then((m) => m.AlertsPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'alert-rules',
+    loadChildren: () => import('./pages/alert-rules/alert-rules.module').then((m) => m.AlertRulesPageModule),
+    canActivate: [AuthGuard],
   },
 ];
 

@@ -1,4 +1,10 @@
+import { Connector } from './connector.model';
+import { Machine } from './machine.model';
+
 export interface Gateway {
   id: number;
-  description: string;
+  name: string;
+  location: string;
+  connectors?: Connector[];
+  machines?: Machine[];
 }

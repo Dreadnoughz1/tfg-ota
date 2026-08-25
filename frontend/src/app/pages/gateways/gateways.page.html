@@ -1,13 +1,14 @@
-<ion-header [translucent]="true">
+<ion-header class="app-header">
   <ion-toolbar>
-    <ion-title>gateways</ion-title>
+    <ion-title><span class="brand-mark">◈</span> OTA Control</ion-title>
+    <ion-buttons slot="end"><ion-button (click)="navigate('/connectors')">Conectores</ion-button><ion-button (click)="navigate('/machines')">Máquinas</ion-button><ion-button (click)="navigate('/alert-rules')">Reglas</ion-button><ion-button (click)="navigate('/alerts')">Alertas</ion-button></ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">gateways</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding app-content">
+  <main class="page-shell">
+    <section class="page-intro"><div><p class="eyebrow">Infraestructura industrial</p><h1>Gateways</h1><p>Administra los puntos de conexión y accede a sus conectores.</p></div><ion-button (click)="openCreate()"><ion-icon name="add-outline" slot="start"></ion-icon>Nuevo gateway</ion-button></section>
+    <ion-card *ngIf="showForm" class="editor-card"><ion-card-header><ion-card-title>{{ editing ? 'Editar gateway' : 'Crear gateway' }}</ion-card-title></ion-card-header><ion-card-content><form (ngSubmit)="save()" #gatewayForm="ngForm"><ion-grid><ion-row><ion-col size="12" sizeMd="6"><ion-input label="Nombre" labelPlacement="stacked" [(ngModel)]="form.name" name="name" required></ion-input></ion-col><ion-col size="12" sizeMd="6"><ion-input label="Ubicación" labelPlacement="stacked" [(ngModel)]="form.location" name="location" required></ion-input></ion-col></ion-row></ion-grid><div class="form-actions"><ion-button fill="clear" type="button" (click)="showForm=false">Cancelar</ion-button><ion-button type="submit" [disabled]="gatewayForm.invalid">Guardar</ion-button></div></form></ion-card-content></ion-card>
+    <ion-list class="entity-list" *ngIf="!loading; else loader"><ion-item *ngFor="let gateway of gateways" button detail="false"><ion-icon name="hardware-chip-outline" slot="start" color="primary"></ion-icon><ion-label (click)="goToConnectors(gateway)"><h2>{{ gateway.name }}</h2><p>{{ gateway.location }}</p></ion-label><ion-button fill="clear" aria-label="Editar" (click)="openEdit(gateway)"><ion-icon name="create-outline"></ion-icon></ion-button><ion-button fill="clear" color="danger" aria-label="Eliminar" (click)="delete(gateway)"><ion-icon name="trash-outline"></ion-icon></ion-button><ion-button fill="outline" (click)="goToConnectors(gateway)">Conectores</ion-button></ion-item><div class="empty-state" *ngIf="gateways.length === 0"><ion-icon name="git-network-outline"></ion-icon><h2>Aún no hay gateways</h2><p>Crea el primer punto de conexión para empezar.</p></div></ion-list>
+    <ng-template #loader><div class="loader"><ion-spinner></ion-spinner> Cargando gateways…</div></ng-template>
+  </main>
 </ion-content>
