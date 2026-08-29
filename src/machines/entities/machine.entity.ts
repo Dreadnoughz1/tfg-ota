@@ -24,6 +24,8 @@ export class Machine {
   })
   connector: Connector;
 
-  @ManyToOne(() => Gateway, (gateway) => gateway.machines)
+  @ManyToOne(() => Gateway, (gateway) => gateway.machines, {
+    onDelete: 'CASCADE',
+  })
   gateway: Gateway;
 }

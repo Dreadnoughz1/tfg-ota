@@ -14,15 +14,15 @@ export class AuthService {
   ) {}
 
   login(username: string, password: string) {
-    this.http
-      .post<LoginResponse>(`${this.api}/auth/login`, {
-        username,
-        password,
-      })
-      .subscribe((res) => {
-        localStorage.setItem('token', res.access_token);
-        void this.router.navigate(['/gateways']);
-      });
+    return this.http.post<LoginResponse>(`${this.api}/auth/login`, {
+      username,
+      password,
+    });
+  }
+
+  completeLogin(response: LoginResponse) {
+    localStorage.setItem('token', response.access_token);
+    void this.router.navigate(['/gateways']);
   }
 
   logout() {

@@ -59,8 +59,10 @@ export class ConnectorsService {
   ): Promise<PaginatedConnectorResponseDto> {
     const { orderBy, order, page, limit, searchText } = paginationDto;
 
-    const queryBuilder =
-      this.connectorRepository.createQueryBuilder('connector');
+    const queryBuilder = this.connectorRepository
+      .createQueryBuilder('connector')
+      .leftJoinAndSelect('connector.gateway', 'gateway')
+      .leftJoinAndSelect('connector.machines', 'machine');
 
     if (searchText) {
       queryBuilder.andWhere('connector.name ILIKE :search', {
@@ -86,7 +88,7 @@ export class ConnectorsService {
 
   async findOne(id: number) {
     const connector = await this.connectorRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['gateway', 'machines'],
     });
 
     if (!connector) {
@@ -98,7 +100,7 @@ export class ConnectorsService {
 
   async update(id: number, updateConnectorDto: UpdateConnectorDto) {
     const connector = await this.connectorRepository.findOne({
-      where: { id: id },
+      where: { id: id }, relations: ['gateway', 'machines'],
     });
 
     if (!connector) {
@@ -106,10 +108,7 @@ export class ConnectorsService {
     }
     const { machinesId, gatewayId, ...rest } = updateConnectorDto;
 
-    if (
-      connector.gateway.id !== undefined &&
-      connector.gateway.id !== gatewayId
-    ) {
+    if (gatewayId !== undefined && connector.gateway.id !== gatewayId) {
       const gateway = await this.gatewayRepository.findOne({
         where: { id: gatewayId },
       });
@@ -149,7 +148,7 @@ export class ConnectorsService {
 
   async remove(id: number) {
     const connector = await this.connectorRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['gateway', 'machines'],
     });
     if (!connector)
       throw new NotFoundException(`Conector con ID ${id} no encontrado.`);

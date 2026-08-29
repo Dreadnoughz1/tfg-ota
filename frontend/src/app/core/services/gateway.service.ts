@@ -24,7 +24,12 @@ export class GatewayService {
     return this.http.delete(`${environment.apiUrl}/gateways/${id}`);
   }
 
-  create(payload: { name: string; location: string; connectorsId: number[]; machinesId: number[] }) {
+  create(payload: {
+    name: string;
+    location: string;
+    connectorsId: number[];
+    machinesId: number[];
+  }) {
     return this.http.post(`${environment.apiUrl}/gateways`, payload);
   }
 

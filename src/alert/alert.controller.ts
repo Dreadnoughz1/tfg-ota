@@ -1,5 +1,7 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { AlertsService } from './alert.service';
+import { CreateAlertDto } from './dto/create-alert.dto';
+import { CreateAlertRuleDto } from './dto/create-alert-rule.dto';
 
 @Controller('alerts')
 export class AlertsController {
@@ -37,4 +39,22 @@ export class AlertsController {
   getLatestAlerts(@Query('limit') limit = 10) {
     return this.alertsService.findLatest(Number(limit));
   }
+
+  @Post()
+  createAlert(@Body() dto: CreateAlertDto) { return this.alertsService.createAlert(dto); }
+
+  @Patch(':id')
+  updateAlert(@Param('id', ParseIntPipe) id: number, @Body() dto: Partial<CreateAlertDto>) { return this.alertsService.updateAlert(id, dto); }
+
+  @Delete(':id')
+  deleteAlert(@Param('id', ParseIntPipe) id: number) { return this.alertsService.removeAlert(id); }
+
+  @Get('rules')
+  getRules() { return this.alertsService.findRules(); }
+
+  @Post('rules')
+  createRule(@Body() dto: CreateAlertRuleDto) { return this.alertsService.createRule(dto); }
+
+  @Delete('rules/:id')
+  deleteRule(@Param('id', ParseIntPipe) id: number) { return this.alertsService.removeRule(id); }
 }

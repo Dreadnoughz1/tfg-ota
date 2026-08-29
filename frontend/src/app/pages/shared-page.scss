@@ -1,1 +1,105 @@
-.app-content { --background: #f5f7fb; } .page-shell { max-width: 1180px; margin: 0 auto; } .page-intro { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:26px 0; } .page-intro h1 { margin:3px 0 6px; font-size:2rem; font-weight:700; color:#19233a; } .page-intro p { color:#667085; margin:0; } .eyebrow { color:#4169e1 !important; font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; } .editor-card { border:1px solid #e3e8f4; box-shadow:0 12px 35px rgba(26,39,70,.07); border-radius:16px; margin-bottom:20px; } .form-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; } .entity-list { border:1px solid #e3e8f4; border-radius:16px; overflow:hidden; background:#fff; } .entity-list ion-item { --padding-start:18px; --inner-padding-end:12px; min-height:78px; } .entity-list h2 { font-weight:650; color:#27334d; } .entity-list p { color:#6d7890; } .empty-state { padding:56px 24px; text-align:center; color:#69758d; } .empty-state ion-icon { font-size:46px; color:#8da5e8; } .empty-state h2 { color:#2c3852; } .loader { display:flex; gap:10px; align-items:center; justify-content:center; padding:60px; color:#60708d; } .brand-mark { color:#6c8cff; margin-right:6px; } .app-header ion-toolbar { --background:#17223b; --color:#fff; --border-color:transparent; padding-inline: max(10px, calc((100vw - 1180px)/2)); } .app-header ion-button { --color:#d9e2ff; font-size:.85rem; } @media (max-width:700px) { .page-intro { align-items:flex-start; flex-direction:column; } .app-header ion-buttons ion-button { font-size:0; width:34px; } }
+.app-content {
+  --background: #f5f7fb;
+}
+.page-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.page-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 26px 0;
+}
+.page-intro h1 {
+  margin: 3px 0 6px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #19233a;
+}
+.page-intro p {
+  color: #667085;
+  margin: 0;
+}
+.eyebrow {
+  color: #4169e1 !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.editor-card {
+  border: 1px solid #e3e8f4;
+  box-shadow: 0 12px 35px rgba(26, 39, 70, 0.07);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+.entity-list {
+  border: 1px solid #e3e8f4;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+.entity-list ion-item {
+  --padding-start: 18px;
+  --inner-padding-end: 12px;
+  min-height: 78px;
+}
+.entity-list h2 {
+  font-weight: 650;
+  color: #27334d;
+}
+.entity-list p {
+  color: #6d7890;
+}
+.empty-state {
+  padding: 56px 24px;
+  text-align: center;
+  color: #69758d;
+}
+.empty-state ion-icon {
+  font-size: 46px;
+  color: #8da5e8;
+}
+.empty-state h2 {
+  color: #2c3852;
+}
+.loader {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  color: #60708d;
+}
+.brand-mark {
+  color: #6c8cff;
+  margin-right: 6px;
+}
+.app-header ion-toolbar {
+  --background: #17223b;
+  --color: #fff;
+  --border-color: transparent;
+  padding-inline: max(10px, calc((100vw - 1180px) / 2));
+}
+.app-header ion-button {
+  --color: #d9e2ff;
+  font-size: 0.85rem;
+}
+@media (max-width: 700px) {
+  .page-intro {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .app-header ion-buttons ion-button {
+    font-size: 0;
+    width: 34px;
+  }
+}

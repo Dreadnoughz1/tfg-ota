@@ -1,2 +1,107 @@
-<ion-header class="app-header"><ion-toolbar><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title><ion-buttons slot="end"><ion-button (click)="nav('/gateways')">Gateways</ion-button><ion-button (click)="nav('/machines')">Máquinas</ion-button><ion-button (click)="nav('/alert-rules')">Reglas</ion-button><ion-button (click)="nav('/alerts')">Alertas</ion-button></ion-buttons></ion-toolbar></ion-header>
-<ion-content class="ion-padding app-content"><main class="page-shell"><section class="page-intro"><div><p class="eyebrow">{{ filterGatewayId ? 'Gateway seleccionado' : 'Infraestructura industrial' }}</p><h1>Conectores</h1><p>Consulta sus máquinas y el gateway al que pertenecen.</p></div><ion-button (click)="openCreate()"><ion-icon name="add-outline" slot="start"></ion-icon>Nuevo conector</ion-button></section><ion-card *ngIf="showForm" class="editor-card"><ion-card-header><ion-card-title>{{ editing ? 'Editar conector' : 'Crear conector' }}</ion-card-title></ion-card-header><ion-card-content><form (ngSubmit)="save()" #f="ngForm"><ion-grid><ion-row><ion-col size="12" sizeMd="4"><ion-input label="Nombre" labelPlacement="stacked" [(ngModel)]="form.name" name="name" required></ion-input></ion-col><ion-col size="12" sizeMd="4"><ion-input label="Puerto" labelPlacement="stacked" [(ngModel)]="form.portName" name="portName" required></ion-input></ion-col><ion-col size="12" sizeMd="4"><ion-select label="Gateway" labelPlacement="stacked" [(ngModel)]="form.gatewayId" name="gatewayId" required><ion-select-option *ngFor="let g of gateways" [value]="g.id">{{g.name}}</ion-select-option></ion-select></ion-col></ion-row></ion-grid><div class="form-actions"><ion-button fill="clear" type="button" (click)="showForm=false">Cancelar</ion-button><ion-button type="submit" [disabled]="f.invalid">Guardar</ion-button></div></form></ion-card-content></ion-card><ion-list class="entity-list" *ngIf="!loading; else loader"><ion-item *ngFor="let c of connectors"><ion-icon name="git-branch-outline" slot="start" color="primary"></ion-icon><ion-label><h2>{{c.name}}</h2><p>Puerto: {{c.portName}}</p></ion-label><ion-button fill="outline" (click)="gateway(c)">Gateway</ion-button><ion-button fill="outline" (click)="machines(c)">Máquinas</ion-button><ion-button fill="clear" (click)="openEdit(c)"><ion-icon name="create-outline"></ion-icon></ion-button><ion-button fill="clear" color="danger" (click)="delete(c)"><ion-icon name="trash-outline"></ion-icon></ion-button></ion-item><div class="empty-state" *ngIf="connectors.length===0"><ion-icon name="git-branch-outline"></ion-icon><h2>No hay conectores</h2><p>Crea un conector para conectarlo a un gateway.</p></div></ion-list><ng-template #loader><div class="loader"><ion-spinner></ion-spinner> Cargando conectores…</div></ng-template></main></ion-content>
+<ion-header class="app-header"
+  ><ion-toolbar
+    ><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title
+    ><ion-buttons slot="end"
+      ><ion-button (click)="nav('/gateways')">Gateways</ion-button
+      ><ion-button (click)="nav('/connectors')">Conectores</ion-button
+      ><ion-button (click)="nav('/machines')">Máquinas</ion-button
+      ><ion-button (click)="nav('/alerts')">Alertas</ion-button
+      ><ion-button (click)="nav('/alert-rules')"
+        >Reglas</ion-button
+      ></ion-buttons
+    ></ion-toolbar
+  ></ion-header
+>
+<ion-content class="ion-padding app-content"
+  ><main class="page-shell">
+    <section class="page-intro">
+      <div>
+        <p class="eyebrow">
+          {{ filterGatewayId ? 'Gateway seleccionado' : 'Infraestructura
+          industrial' }}
+        </p>
+        <h1>Conectores</h1>
+        <p>Consulta sus máquinas y el gateway al que pertenecen.</p>
+      </div>
+      <ion-button (click)="openCreate()"
+        ><ion-icon name="add-outline" slot="start"></ion-icon>Nuevo
+        conector</ion-button
+      >
+    </section>
+    <ion-card *ngIf="showForm" class="editor-card"
+      ><ion-card-header
+        ><ion-card-title
+          >{{ editing ? 'Editar conector' : 'Crear conector' }}</ion-card-title
+        ></ion-card-header
+      ><ion-card-content
+        ><form (ngSubmit)="save()" #f="ngForm">
+          <ion-grid
+            ><ion-row
+              ><ion-col size="12" sizeMd="4"
+                ><ion-input
+                  label="Nombre"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.name"
+                  name="name"
+                  required
+                ></ion-input></ion-col
+              ><ion-col size="12" sizeMd="4"
+                ><ion-input
+                  label="Puerto"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.portName"
+                  name="portName"
+                  required
+                ></ion-input></ion-col
+              ><ion-col size="12" sizeMd="4"
+                ><ion-select
+                  label="Gateway"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.gatewayId"
+                  name="gatewayId"
+                  required
+                  ><ion-select-option *ngFor="let g of gateways" [value]="g.id"
+                    >{{g.name}}</ion-select-option
+                  ></ion-select
+                ></ion-col
+              ></ion-row
+            ></ion-grid
+          >
+          <div class="form-actions">
+            <ion-button fill="clear" type="button" (click)="showForm=false"
+              >Cancelar</ion-button
+            ><ion-button type="submit" [disabled]="f.invalid"
+              >Guardar</ion-button
+            >
+          </div>
+        </form></ion-card-content
+      ></ion-card
+    ><ion-list class="entity-list" *ngIf="!loading; else loader"
+      ><ion-item *ngFor="let c of connectors"
+        ><ion-icon
+          name="git-branch-outline"
+          slot="start"
+          color="primary"
+        ></ion-icon
+        ><ion-label
+          ><h2>{{c.name}}</h2>
+          <p>Puerto: {{c.portName}}</p></ion-label
+        ><ion-button fill="outline" (click)="gateway(c)">Gateway</ion-button
+        ><ion-button fill="outline" (click)="machines(c)">Máquinas</ion-button
+        ><ion-button fill="clear" (click)="openEdit(c)"
+          ><ion-icon name="create-outline"></ion-icon></ion-button
+        ><ion-button fill="clear" color="danger" (click)="delete(c)"
+          ><ion-icon name="trash-outline"></ion-icon></ion-button
+      ></ion-item>
+      <div class="empty-state" *ngIf="connectors.length===0">
+        <ion-icon name="git-branch-outline"></ion-icon>
+        <h2>No hay conectores</h2>
+        <p>Crea un conector para conectarlo a un gateway.</p>
+      </div></ion-list
+    ><ng-template #loader
+      ><div class="loader">
+        <ion-spinner></ion-spinner> Cargando conectores…
+      </div></ng-template
+    >
+  </main></ion-content
+>

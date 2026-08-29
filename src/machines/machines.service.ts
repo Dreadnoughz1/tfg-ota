@@ -55,7 +55,10 @@ export class MachinesService {
   ): Promise<PaginatedMachineResponseDto> {
     const { orderBy, order, page, limit, searchText } = paginationDto;
 
-    const queryBuilder = this.machineRepository.createQueryBuilder('machine');
+    const queryBuilder = this.machineRepository
+      .createQueryBuilder('machine')
+      .leftJoinAndSelect('machine.connector', 'connector')
+      .leftJoinAndSelect('machine.gateway', 'gateway');
 
     if (searchText) {
       queryBuilder.andWhere('machine.description ILIKE :search', {
@@ -83,7 +86,7 @@ export class MachinesService {
 
   async findOne(id: number) {
     const machine = await this.machineRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['connector', 'gateway'],
     });
 
     if (!machine) {
@@ -95,7 +98,7 @@ export class MachinesService {
 
   async update(id: number, updateMachineDto: UpdateMachineDto) {
     const machine = await this.machineRepository.findOne({
-      where: { id: id },
+      where: { id: id }, relations: ['connector', 'gateway'],
     });
 
     if (!machine) {
@@ -104,7 +107,7 @@ export class MachinesService {
 
     const { connectorId, gatewayId, ...rest } = updateMachineDto;
 
-    if (machine.connector.id !== connectorId) {
+    if (connectorId !== undefined && machine.connector.id !== connectorId) {
       const connector = await this.connectorRepository.findOne({
         where: { id: connectorId },
       });
@@ -116,7 +119,7 @@ export class MachinesService {
       machine.connector = connector;
     }
 
-    if (machine.gateway.id !== gatewayId) {
+    if (gatewayId !== undefined && machine.gateway.id !== gatewayId) {
       const gateway = await this.gatewayRepository.findOne({
         where: { id: gatewayId },
       });
@@ -137,7 +140,7 @@ export class MachinesService {
 
   async remove(id: number) {
     const machine = await this.machineRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['connector', 'gateway'],
     });
     if (!machine)
       throw new NotFoundException(`Machine con ID ${id} no encontrado.`);

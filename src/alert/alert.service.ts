@@ -5,6 +5,9 @@ import { AlertRule } from './entities/alert-rule.entity';
 import { Alert } from './entities/alert.entity';
 import { Machine } from '../machines/entities/machine.entity';
 import { AlertsGateway } from 'src/alerts/alerts.gateway';
+import { NotFoundException } from '@nestjs/common';
+import { CreateAlertDto } from './dto/create-alert.dto';
+import { CreateAlertRuleDto } from './dto/create-alert-rule.dto';
 
 @Injectable()
 export class AlertsService {
@@ -33,6 +36,46 @@ export class AlertsService {
       order: { timestamp: 'DESC' },
       take: limit,
     });
+  }
+
+  findRules() { return this.ruleRepo.find({ relations: ['machine'], order: { id: 'DESC' } }); }
+
+  async createRule(dto: CreateAlertRuleDto) {
+    const { machineId, ...ruleData } = dto;
+    const machine = await this.getMachine(machineId);
+    return this.ruleRepo.save(this.ruleRepo.create({ ...ruleData, machine }));
+  }
+
+  async removeRule(id: number) {
+    const rule = await this.ruleRepo.findOne({ where: { id } });
+    if (!rule) throw new NotFoundException(`Regla con ID ${id} no encontrada.`);
+    await this.ruleRepo.remove(rule);
+  }
+
+  async createAlert(dto: CreateAlertDto) {
+    const { machineId, ...alertData } = dto;
+    const machine = await this.getMachine(machineId);
+    return this.alertRepo.save(this.alertRepo.create({ ...alertData, machine }));
+  }
+
+  async updateAlert(id: number, dto: Partial<CreateAlertDto>) {
+    const alert = await this.alertRepo.findOne({ where: { id }, relations: ['machine'] });
+    if (!alert) throw new NotFoundException(`Alerta con ID ${id} no encontrada.`);
+    if (dto.machineId) alert.machine = await this.getMachine(dto.machineId);
+    Object.assign(alert, dto);
+    return this.alertRepo.save(alert);
+  }
+
+  async removeAlert(id: number) {
+    const alert = await this.alertRepo.findOne({ where: { id } });
+    if (!alert) throw new NotFoundException(`Alerta con ID ${id} no encontrada.`);
+    await this.alertRepo.remove(alert);
+  }
+
+  private async getMachine(id: number) {
+    const machine = await this.alertRepo.manager.getRepository(Machine).findOne({ where: { id } });
+    if (!machine) throw new NotFoundException(`Máquina con ID ${id} no encontrada.`);
+    return machine;
   }
 
   async evaluate(

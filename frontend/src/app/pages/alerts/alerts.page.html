@@ -1,1 +1,53 @@
-<ion-header class="app-header"><ion-toolbar><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title><ion-buttons slot="end"><ion-button (click)="nav('/gateways')">Gateways</ion-button><ion-button (click)="nav('/connectors')">Conectores</ion-button><ion-button (click)="nav('/machines')">Máquinas</ion-button><ion-button (click)="nav('/alert-rules')">Reglas</ion-button></ion-buttons></ion-toolbar></ion-header><ion-content class="ion-padding app-content"><main class="page-shell"><section class="page-intro"><div><p class="eyebrow">Supervisión en tiempo real</p><h1>{{machineId ? 'Alertas de '+machineName : 'Alertas recientes'}}</h1><p>Eventos generados al superar los umbrales configurados.</p></div></section><ion-list class="entity-list" *ngIf="!loading; else loader"><ion-item *ngFor="let alert of alerts"><ion-icon [name]="alert.severity === 'critical' ? 'warning-outline' : 'alert-circle-outline'" slot="start" [color]="alert.severity === 'critical' ? 'danger' : 'warning'"></ion-icon><ion-label><h2>{{alert.attributeName}}: {{alert.value}}</h2><p>Umbral {{alert.operator}} {{alert.threshold}} · {{alert.timestamp | date:'medium'}}</p></ion-label><ion-badge [color]="alert.severity === 'critical' ? 'danger' : 'warning'">{{alert.severity}}</ion-badge></ion-item><div class="empty-state" *ngIf="alerts.length===0"><ion-icon name="shield-checkmark-outline"></ion-icon><h2>Sin alertas</h2><p>No hay incidencias que mostrar.</p></div></ion-list><ng-template #loader><div class="loader"><ion-spinner></ion-spinner> Cargando alertas…</div></ng-template></main></ion-content>
+<ion-header class="app-header"
+  ><ion-toolbar
+    ><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title
+    ><ion-buttons slot="end"
+      ><ion-button (click)="nav('/gateways')">Gateways</ion-button
+      ><ion-button (click)="nav('/connectors')">Conectores</ion-button
+      ><ion-button (click)="nav('/machines')">Máquinas</ion-button
+      ><ion-button (click)="nav('/alerts')">Alertas</ion-button
+      ><ion-button (click)="nav('/alert-rules')"
+        >Reglas</ion-button
+      ></ion-buttons
+    ></ion-toolbar
+  ></ion-header
+>
+<ion-content class="ion-padding app-content"
+  ><main class="page-shell">
+    <section class="page-intro">
+      <div>
+        <p class="eyebrow">Supervisión en tiempo real</p>
+        <h1>{{machineId ? 'Alertas de '+machineName : 'Alertas recientes'}}</h1>
+        <p>Eventos generados al superar los umbrales configurados.</p>
+      </div>
+    </section>
+    <ion-list class="entity-list" *ngIf="!loading; else loader"
+      ><ion-item *ngFor="let alert of alerts"
+        ><ion-icon
+          [name]="alert.severity === 'critical' ? 'warning-outline' : 'alert-circle-outline'"
+          slot="start"
+          [color]="alert.severity === 'critical' ? 'danger' : 'warning'"
+        ></ion-icon
+        ><ion-label
+          ><h2>{{alert.attributeName}}: {{alert.value}}</h2>
+          <p>
+            Umbral {{alert.operator}} {{alert.threshold}} · {{alert.timestamp |
+            date:'medium'}}
+          </p></ion-label
+        ><ion-badge
+          [color]="alert.severity === 'critical' ? 'danger' : 'warning'"
+          >{{alert.severity}}</ion-badge
+        ></ion-item
+      >
+      <div class="empty-state" *ngIf="alerts.length===0">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <h2>Sin alertas</h2>
+        <p>No hay incidencias que mostrar.</p>
+      </div></ion-list
+    ><ng-template #loader
+      ><div class="loader">
+        <ion-spinner></ion-spinner> Cargando alertas…
+      </div></ng-template
+    >
+  </main></ion-content
+>

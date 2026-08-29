@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'gateways', pathMatch: 'full' },
   {
     path: 'connectors',
-    loadChildren: () => import('./pages/connectors/connectors.module').then((m) => m.ConnectorsPageModule),
+    loadChildren: () =>
+      import('./pages/connectors/connectors.module').then(
+        (m) => m.ConnectorsPageModule,
+      ),
     canActivate: [AuthGuard],
   },
   {
@@ -34,12 +37,16 @@ const routes: Routes = [
   },
   {
     path: 'alerts',
-    loadChildren: () => import('./pages/alerts/alerts.module').then((m) => m.AlertsPageModule),
+    loadChildren: () =>
+      import('./pages/alerts/alerts.module').then((m) => m.AlertsPageModule),
     canActivate: [AuthGuard],
   },
   {
     path: 'alert-rules',
-    loadChildren: () => import('./pages/alert-rules/alert-rules.module').then((m) => m.AlertRulesPageModule),
+    loadChildren: () =>
+      import('./pages/alert-rules/alert-rules.module').then(
+        (m) => m.AlertRulesPageModule,
+      ),
     canActivate: [AuthGuard],
   },
 ];

@@ -1,1 +1,130 @@
-<ion-header class="app-header"><ion-toolbar><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title><ion-buttons slot="end"><ion-button (click)="nav('/gateways')">Gateways</ion-button><ion-button (click)="nav('/connectors')">Conectores</ion-button><ion-button (click)="nav('/machines')">Máquinas</ion-button><ion-button (click)="nav('/alerts')">Alertas</ion-button></ion-buttons></ion-toolbar></ion-header><ion-content class="ion-padding app-content"><main class="page-shell"><section class="page-intro"><div><p class="eyebrow">Automatización</p><h1>Reglas de alerta</h1><p>Define los umbrales que desencadenan una alerta en cada máquina.</p></div></section><ion-card class="editor-card"><ion-card-content><div class="empty-state"><ion-icon name="construct-outline"></ion-icon><h2>Falta la ruta de reglas en la API</h2><p>El backend actual no expone endpoints para listar, crear ni eliminar reglas de alerta. Esta pantalla quedará conectada cuando estén disponibles.</p></div></ion-card-content></ion-card></main></ion-content>
+<ion-header class="app-header"
+  ><ion-toolbar
+    ><ion-title><span class="brand-mark">◈</span> OTA Control</ion-title
+    ><ion-buttons slot="end"
+      ><ion-button (click)="nav('/gateways')">Gateways</ion-button
+      ><ion-button (click)="nav('/connectors')">Conectores</ion-button
+      ><ion-button (click)="nav('/machines')">Máquinas</ion-button
+      ><ion-button (click)="nav('/alerts')">Alertas</ion-button
+      ><ion-button (click)="nav('/alert-rules')"
+        >Reglas</ion-button
+      ></ion-buttons
+    ></ion-toolbar
+  ></ion-header
+>
+<ion-content class="ion-padding app-content"
+  ><main class="page-shell">
+    <section class="page-intro">
+      <div>
+        <p class="eyebrow">Automatización</p>
+        <h1>Reglas de alerta</h1>
+        <p>Define los umbrales que desencadenan una alerta en cada máquina.</p>
+      </div>
+      <ion-button (click)="openCreate()"
+        ><ion-icon name="add-outline" slot="start"></ion-icon>Nueva
+        regla</ion-button
+      >
+    </section>
+    <ion-card *ngIf="showForm" class="editor-card"
+      ><ion-card-header
+        ><ion-card-title>Crear regla de alerta</ion-card-title></ion-card-header
+      ><ion-card-content
+        ><form (ngSubmit)="save()" #f="ngForm">
+          <ion-grid
+            ><ion-row
+              ><ion-col size="12" sizeMd="3"
+                ><ion-input
+                  label="Atributo"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.attributeName"
+                  name="attributeName"
+                  required
+                ></ion-input></ion-col
+              ><ion-col size="12" sizeMd="2"
+                ><ion-select
+                  label="Operador"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.operator"
+                  name="operator"
+                  ><ion-select-option value=">">&gt;</ion-select-option
+                  ><ion-select-option value="<">&lt;</ion-select-option
+                  ><ion-select-option value=">=">≥</ion-select-option
+                  ><ion-select-option value="<=">≤</ion-select-option
+                  ><ion-select-option value="="
+                    >=</ion-select-option
+                  ></ion-select
+                ></ion-col
+              ><ion-col size="12" sizeMd="2"
+                ><ion-input
+                  type="number"
+                  label="Umbral"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.threshold"
+                  name="threshold"
+                  required
+                ></ion-input></ion-col
+              ><ion-col size="12" sizeMd="2"
+                ><ion-select
+                  label="Severidad"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.severity"
+                  name="severity"
+                  ><ion-select-option value="warning"
+                    >Advertencia</ion-select-option
+                  ><ion-select-option value="critical"
+                    >Crítica</ion-select-option
+                  ></ion-select
+                ></ion-col
+              ><ion-col size="12" sizeMd="3"
+                ><ion-select
+                  label="Máquina"
+                  labelPlacement="stacked"
+                  [(ngModel)]="form.machineId"
+                  name="machineId"
+                  required
+                  ><ion-select-option
+                    *ngFor="let machine of machines"
+                    [value]="machine.id"
+                    >{{machine.name}}</ion-select-option
+                  ></ion-select
+                ></ion-col
+              ></ion-row
+            ></ion-grid
+          >
+          <div class="form-actions">
+            <ion-button fill="clear" type="button" (click)="showForm=false"
+              >Cancelar</ion-button
+            ><ion-button type="submit" [disabled]="f.invalid"
+              >Guardar</ion-button
+            >
+          </div>
+        </form></ion-card-content
+      ></ion-card
+    ><ion-list class="entity-list" *ngIf="!loading; else loader"
+      ><ion-item *ngFor="let rule of rules"
+        ><ion-icon
+          name="options-outline"
+          slot="start"
+          color="primary"
+        ></ion-icon
+        ><ion-label
+          ><h2>{{rule.attributeName}} {{rule.operator}} {{rule.threshold}}</h2>
+          <p>
+            {{rule.machine?.name || 'Máquina '+rule.machine?.id}} · Severidad
+            {{rule.severity}}
+          </p></ion-label
+        ><ion-button fill="clear" color="danger" (click)="delete(rule)"
+          ><ion-icon name="trash-outline"></ion-icon></ion-button
+      ></ion-item>
+      <div class="empty-state" *ngIf="rules.length===0">
+        <ion-icon name="options-outline"></ion-icon>
+        <h2>No hay reglas</h2>
+        <p>Crea una regla para automatizar la detección de incidencias.</p>
+      </div></ion-list
+    ><ng-template #loader
+      ><div class="loader">
+        <ion-spinner></ion-spinner> Cargando reglas…
+      </div></ng-template
+    >
+  </main></ion-content
+>

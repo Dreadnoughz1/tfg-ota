@@ -65,7 +65,10 @@ export class GatewaysService {
   ): Promise<PaginatedGatewayResponseDto> {
     const { orderBy, order, page, limit, searchText } = paginationDto;
 
-    const queryBuilder = this.gatewayRepository.createQueryBuilder('gateway');
+    const queryBuilder = this.gatewayRepository
+      .createQueryBuilder('gateway')
+      .leftJoinAndSelect('gateway.connectors', 'connector')
+      .leftJoinAndSelect('gateway.machines', 'machine');
 
     if (searchText) {
       queryBuilder.andWhere('gateway.name ILIKE :search', {
@@ -91,7 +94,7 @@ export class GatewaysService {
 
   async findOne(id: number) {
     const gateway = await this.gatewayRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['connectors', 'machines'],
     });
 
     if (!gateway) {
@@ -103,7 +106,7 @@ export class GatewaysService {
 
   async update(id: number, updateGatewayDto: UpdateGatewayDto) {
     const gateway = await this.gatewayRepository.findOne({
-      where: { id: id },
+      where: { id: id }, relations: ['connectors', 'machines'],
     });
 
     if (!gateway) {
@@ -118,7 +121,7 @@ export class GatewaysService {
 
   async remove(id: number) {
     const gateway = await this.gatewayRepository.findOne({
-      where: { id },
+      where: { id }, relations: ['connectors', 'machines'],
     });
     if (!gateway)
       throw new NotFoundException(`Gateway con ID ${id} no encontrado.`);

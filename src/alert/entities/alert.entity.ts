@@ -24,6 +24,6 @@ export class Alert {
   @Column()
   timestamp: Date;
 
-  @ManyToOne(() => Machine)
+  @ManyToOne(() => Machine, { onDelete: 'CASCADE' })
   machine: Machine;
 }
