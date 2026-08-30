@@ -8,6 +8,7 @@ import { GatewayService } from '../../core/services';
 @Component({
   selector: 'app-gateways',
   templateUrl: './gateways.page.html',
+  styleUrls: ['./gateways.page.scss'],
   standalone: false,
 })
 export class GatewaysPage {
