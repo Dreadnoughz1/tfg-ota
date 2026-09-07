@@ -93,6 +93,15 @@
   --color: #d9e2ff;
   font-size: 0.85rem;
 }
+.app-header ion-button.logout-btn {
+  --color: #ff6b6b;
+  margin-left: 8px;
+
+  ion-icon {
+    font-size: 1.15rem;
+    margin-right: 4px;
+  }
+}
 @media (max-width: 700px) {
   .page-intro {
     align-items: flex-start;
@@ -101,5 +110,9 @@
   .app-header ion-buttons ion-button {
     font-size: 0;
     width: 34px;
+
+    ion-icon {
+      margin-right: 0;
+    }
   }
 }

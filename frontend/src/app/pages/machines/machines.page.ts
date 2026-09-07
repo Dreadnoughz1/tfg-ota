@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Connector, Gateway, Machine } from '../../models';
-import { GatewayService, ResourceService } from '../../core/services';
+import { AuthService, GatewayService, ResourceService } from '../../core/services';
 
 @Component({
   selector: 'app-machines',
@@ -30,6 +30,7 @@ export class MachinesPage {
   constructor(
     private resources: ResourceService,
     private gatewayService: GatewayService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private alerts: AlertController,
@@ -139,5 +140,8 @@ export class MachinesPage {
   }
   nav(p: string) {
     void this.router.navigate([p]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }

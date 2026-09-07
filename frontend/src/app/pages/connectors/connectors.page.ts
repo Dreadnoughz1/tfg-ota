@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Gateway, Connector } from '../../models';
-import { GatewayService, ResourceService } from '../../core/services';
+import { AuthService, GatewayService, ResourceService } from '../../core/services';
 @Component({
   selector: 'app-connectors',
   templateUrl: './connectors.page.html',
@@ -21,6 +21,7 @@ export class ConnectorsPage {
   constructor(
     private resources: ResourceService,
     private gatewaysService: GatewayService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private alerts: AlertController,
@@ -118,5 +119,8 @@ export class ConnectorsPage {
   }
   nav(p: string) {
     void this.router.navigate([p]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }

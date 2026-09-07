@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Machine } from '../../models';
-import { ResourceService } from '../../core/services';
+import { AuthService, ResourceService } from '../../core/services';
 
 @Component({
   selector: 'app-alert-rules',
@@ -24,6 +24,7 @@ export class AlertRulesPage {
   };
   constructor(
     private resources: ResourceService,
+    private authService: AuthService,
     private router: Router,
     private alerts: AlertController,
   ) {}
@@ -86,5 +87,8 @@ export class AlertRulesPage {
   }
   nav(path: string) {
     void this.router.navigate([path]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }

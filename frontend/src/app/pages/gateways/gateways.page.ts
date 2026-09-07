@@ -3,7 +3,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Gateway } from '../../models';
-import { GatewayService } from '../../core/services';
+import { AuthService, GatewayService } from '../../core/services';
 
 @Component({
   selector: 'app-gateways',
@@ -21,6 +21,7 @@ export class GatewaysPage {
   selectedId?: number;
   constructor(
     private gatewayService: GatewayService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private alertController: AlertController,
@@ -94,5 +95,8 @@ export class GatewaysPage {
   }
   navigate(path: string) {
     void this.router.navigate([path]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }

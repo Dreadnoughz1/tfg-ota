@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResourceService } from '../../core/services';
+import { AuthService, ResourceService } from '../../core/services';
 @Component({
   selector: 'app-alerts',
   templateUrl: './alerts.page.html',
@@ -14,6 +14,7 @@ export class AlertsPage {
   machineName = '';
   constructor(
     private resources: ResourceService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
   ) {}
@@ -36,5 +37,8 @@ export class AlertsPage {
   }
   nav(path: string) {
     void this.router.navigate([path]);
+  }
+  logout() {
+    this.authService.logout();
   }
 }

@@ -6,8 +6,10 @@
       ><ion-button (click)="nav('/connectors')">Conectores</ion-button
       ><ion-button (click)="nav('/machines')">Máquinas</ion-button
       ><ion-button (click)="nav('/alerts')">Alertas</ion-button
-      ><ion-button (click)="nav('/alert-rules')"
-        >Reglas</ion-button
+      ><ion-button (click)="nav('/alert-rules')">Reglas</ion-button
+      ><ion-button (click)="logout()" class="logout-btn" title="Cerrar sesión"
+        ><ion-icon name="log-out-outline" slot="start"></ion-icon>Cerrar
+        sesión</ion-button
       ></ion-buttons
     ></ion-toolbar
   ></ion-header
